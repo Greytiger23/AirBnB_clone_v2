@@ -35,6 +35,18 @@ This repository contains the initial stage of a student project to build a clone
 ```
 5. This prompt designates you are in the "HBnB" console. There are a variety of commands available within the console program.
 
+1. Fork the repo
+2. Test for bugs
+3. Make console imporvements
+4. MySQL setup development
+5. MySQL setup test
+6. Delete object
+7. DBStorage - States and Cities
+8. DBStorage - User
+9. DBStorage - Place
+10. DBStorage - Review
+11. DBStorage - Amenity... and BOOM!
+
 ##### Commands
     * create - Creates an instance based on given class
 
