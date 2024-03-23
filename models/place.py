@@ -17,6 +17,7 @@ association_table = Table('place_amenity', Base.metadata,
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = 'places'
+    id = Column(Integer, primary_key=True, nullable=False)
     city_id = Column(String(60), nullable=False)
     user_id = Column(String(60), nullable=False)
     name = Column(String(128), nullable=False)
@@ -31,6 +32,7 @@ class Place(BaseModel, Base):
     reviews = relationship("Review", cascade="all, delete", backref="place")
     amenities = relationship("Amenity", secondary=association_table,
                              viewonly=False)
+    user = relationship("User", back_populates="places")
 
     def __init__(self, *args, **kwargs):
         """initialize a place object"""

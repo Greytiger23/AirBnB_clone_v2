@@ -12,6 +12,7 @@ import shlex
 class State(BaseModel, Base):
     """ State class """
     __tablename__ = 'states'
+    id = Column(Integer, primary_key=True, nullable=False)
     name = Column(String(128), nullable=False)
     cities = relationship("City", cascade="all, delete-orphan",
                           backref="state")

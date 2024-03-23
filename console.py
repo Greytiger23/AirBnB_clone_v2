@@ -2,7 +2,6 @@
 """ Console Module """
 import cmd
 import sys
-from models.base_model import BaseModel, Base
 from models.__init__ import storage
 from models.user import User
 from models.place import Place
@@ -10,6 +9,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
@@ -119,11 +119,11 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         a = args.split(' ')
-        p = {}
         c = a[0]
         if c not in HBNBCommand.classes():
             print("** class doesn't exist **")
             return
+        p = {}
         for x in a[1:]:
             if '=' in x:
                 key, value = x.split('=')
