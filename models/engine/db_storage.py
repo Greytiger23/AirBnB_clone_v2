@@ -1,10 +1,16 @@
 #!/usr/bin/python3
 """module that defines the DBStorage class"""
-import os
+from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
-from models import *
+from models.state import State
+from models.place import Place
+from models.review import Review
+from models.city import City
+from models.amenity import Amenity
+from models.user import User
+from sqlalchemy.ext.declarative import declarative_base
 
 
 class DBStorage:
@@ -15,12 +21,12 @@ class DBStorage:
     def __init__(self):
         """public instance method"""
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-                                      .format(os.getenv('HBNB_MYSQL_USER'),
-                                              os.getenv('HBNB_MYSQL_PWD'),
-                                              os.getenv('HBNB_MYSQL_HOST'),
-                                              os.getenv('HBNB_MYSQL_DB')),
+                                      format(getenv("HBNB_MYSQL_USER"),
+                                              getenv("HBNB_MYSQL_PWD"),
+                                              getenv("HBNB_MYSQL_HOST"),
+                                              getenv("HBNB_MYSQL_DB")),
                                       pool_pre_ping=True)
-        if os.getenv('HBNB_ENV') == 'test':
+        if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
@@ -30,7 +36,7 @@ class DBStorage:
         if cls:
             classes = [cls]
         for c in classes:
-            b = self.__session.query(c).all()
+            b = self.__session.query(c)
             for obj in b:
                 key = "{}.{}".format(type(obj).__name__, obj.id)
                 a[key] = obj
@@ -47,10 +53,14 @@ class DBStorage:
     def delete(self, obj=None):
         """Delete from the current database session"""
         if obj:
-            self.__session.delete(obj)
+            self.session.delete(obj)
 
     def reload(self):
         """Create all tables in the database and current database session"""
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         self.__session = scoped_session(Session)
+
+    def close(self):
+        """closes the session"""
+        self.__session.close()

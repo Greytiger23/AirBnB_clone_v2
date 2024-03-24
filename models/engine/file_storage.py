@@ -20,28 +20,29 @@ classes = {
 
 class FileStorage:
     """This class manages storage of hbnb models in JSON format"""
-    __file_path = 'file.json'
+    __file_path = "file.json"
     __objects = {}
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         if cls is None:
-            return FileStorage.__objects
+            return self.__objects
         else:
             b = {}
-            for key, obj in FileStorage.__objects.items():
+            for key, obj in self.__objects.items():
                 if type(obj) == cls:
                     b[key] = obj
             return b
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        FileStorage.__objects[key] = obj
+        if obj:
+            key = "{}.{}".format(type(obj).__class__.__name__, obj.id)
+            self.__objects[key] = obj
 
     def save(self):
         """Saves storage dictionary to file"""
-        with open(FileStorage.__file_path, 'w') as f:
+        with open(self.__file_path, 'w', encoding="UTF-8") as f:
             temp = {}
             temp.update(FileStorage.__objects)
             for key, val in temp.items():
@@ -52,10 +53,10 @@ class FileStorage:
         """Loads storage dictionary from file"""
         try:
             temp = {}
-            with open(FileStorage.__file_path, 'r') as f:
+            with open(FileStorage.__file_path, 'r', encoding="UTF-8") as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
+                        self.all()[key] = classes(val["__class__"])(**val)
         except FileNotFoundError:
             pass
 
@@ -63,5 +64,9 @@ class FileStorage:
         """public instance method"""
         if obj is not None:
             key = "{}.{}".format(obj.__class__.__name__, obj.id)
-            if key in FileStorage.__objects:
-                del FileStorage.__objects[key]
+            if key in self.__objects:
+                del self.__objects[key]
+
+    def close(self):
+        """closes session"""
+        self.reload()

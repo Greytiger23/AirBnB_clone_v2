@@ -8,8 +8,7 @@ from models.place import association_table
 
 class Amenity(BaseModel, Base):
     """represents the amenity class"""
-    __tablename__ = 'amenities'
-    id = Column(Integer, primary_key=True, nullable=False)
+    __tablename__ = "amenities"
     name = Column(String(128), nullable=False)
     place_amenities = relationship("Place", secondary=association_table,
                                    backref="amenties")

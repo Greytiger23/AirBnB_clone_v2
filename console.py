@@ -120,20 +120,22 @@ class HBNBCommand(cmd.Cmd):
             return
         a = args.split(' ')
         c = a[0]
-        if c not in HBNBCommand.classes():
+        if c not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
         p = {}
         for x in a[1:]:
             if '=' in x:
                 key, value = x.split('=')
+                value = value.strip('"')
                 key = key.replace('_', ' ')
-                if value.startswith('"') and value.endswith('"'):
-                    value = value[1:-1]
                 p[key] = value
-        n = HBNBCommand.classes[c](**p)
-        n.save()
-        print(n.id)
+        try:
+            n = HBNBCommand.classes[c](**p)
+            n.save()
+            print(n.id)
+        except Exception as e:
+            print("** Error creating instance:", e)
 
     def help_create(self):
         """ Help information for the create method """
@@ -328,6 +330,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
