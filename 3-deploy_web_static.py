@@ -1,10 +1,13 @@
 #!/usr/bin/python3
-"""distributes an archive to your web servers, using the function do_deploy"""
+"""creates and distributes an archive to your web servers
+    using the function deploy"""
+
 
 from fabric.api import env, put, run
 import os
 from fabric.operations import local
 from datetime import datetime
+import fabric
 
 
 env.user = 'ubuntu'
@@ -45,3 +48,10 @@ def do_deploy(archive_path):
         return True
     except Exception as e:
         return False
+
+def deploy():
+    """creates and distributes"""
+    archive_path = do_pack()
+    if not archive_path:
+        return False
+    return do_deploy(archive_path)
