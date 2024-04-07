@@ -27,5 +27,5 @@ if ! grep -q "location /hbnb_static" /etc/nginx/sites-available/default; then
 	sudo sed -i "/^server {/a $c" /etc/nginx/sites-available/default
 fi
 # check configuration and start
-sudo nginx -t && sudo systemctl restart nginx
+sudo nginx -t && sudo service nginx restart
 exit 0
