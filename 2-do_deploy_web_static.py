@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """distributes an archive to your web servers, using the function do_deploy"""
 
+
 from fabric.api import env, put, run
 import os
 from fabric.operations import local
@@ -9,7 +10,7 @@ from datetime import datetime
 
 env.user = 'ubuntu'
 env.key_filename = '~/.ssh/id_rsa'
-env.hosts = ['52.23.178.198', '100.24.236.158']
+env.hosts = ['34.204.61.147', '18.208.119.206']
 
 
 def do_pack():
