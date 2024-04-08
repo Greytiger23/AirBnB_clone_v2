@@ -2,7 +2,7 @@
 """distributes an archive to your web servers, using the function do_deploy"""
 
 
-from fabric.api import env, put, run
+from fabric.api import *
 import os
 from fabric.operations import local
 from datetime import datetime
@@ -22,7 +22,7 @@ def do_deploy(archive_path):
         a = os.path.basename(archive_path)
         b = a[:-4]
         run("mkdir -p /data/web_static/releases/{}/".format(b))
-        run("tar -xzf /tmp{} -C /data/web_static/releases/{}/".format(
+        run("tar -xzf /tmp/{} -C /data/web_static/releases/{}/".format(
             a, b))
         run("rm /tmp/{}".format(a))
         run("mv /data/web_static/releases/{}/web_static/* \
