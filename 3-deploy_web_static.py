@@ -12,7 +12,7 @@ import fabric
 
 env.user = 'ubuntu'
 env.key_filename = '~/.ssh/id_rsa'
-env.hosts = ['52.23.178.198', '100.24.236.158']
+env.hosts = ['34.204.61.147', '18.208.119.206']
 
 
 def do_pack():
@@ -47,6 +47,8 @@ def do_deploy(archive_path):
         run("rm -rf /data/web_static/current")
         run("ln -s /data/web_static/releases/{}/ /data/web_static/current"
             .format(b))
+        run("mv /data/web_static/current/index.html \
+            /data/web_static/current/my_index.html")
         print("New version deployed!")
         return True
     except Exception as e:
