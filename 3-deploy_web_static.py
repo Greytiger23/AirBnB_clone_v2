@@ -23,7 +23,7 @@ def do_pack():
         t = datetime.utcnow()
         a = "web_static_{}{}{}{}{}{}.tgz".format(t.year, t.month, t.day,
                                                  t.hour, t.minute, t.second)
-        local("tar -cvzf {} web_static".format(a))
+        local("tar -cvzf versions/{} web_static".format(a))
         return a
     except:
         return None
