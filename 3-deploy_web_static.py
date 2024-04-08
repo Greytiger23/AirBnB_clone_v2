@@ -25,8 +25,9 @@ def do_pack():
                                                  t.hour, t.minute, t.second)
         local("tar -cvzf versions/{} web_static".format(a))
         return a
-    except:
+    except Exception as e:
         return None
+
 
 def do_deploy(archive_path):
     """distribute an archive to web server"""
@@ -48,8 +49,9 @@ def do_deploy(archive_path):
             .format(b))
         print("New version deployed!")
         return True
-    except:
+    except Exception as e:
         return False
+
 
 def deploy():
     """creates and distributes"""
