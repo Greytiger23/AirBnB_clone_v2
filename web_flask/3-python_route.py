@@ -30,8 +30,8 @@ def c_text(text):
 @app.route('/python/<text>', strict_slashes=False)
 def python_text(text):
     """display python text"""
-    text = unquote(ext.replace('_', ' '))
-    return 'Python {}'.format(text)
+    text = unquote(text.replace('_', ' '))
+    return "Python {}".format(text)
 
 
 if __name__ == '__main__':
