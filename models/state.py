@@ -7,6 +7,7 @@ from models.city import City
 from sqlalchemy.ext.declarative import declarative_base
 import models
 import shlex
+from models import storage
 
 
 class State(BaseModel, Base):
@@ -30,3 +31,14 @@ class State(BaseModel, Base):
             if (y.state_id == self.id):
                 x.append(y)
         return x
+
+
+    if storage_type != 'db':
+        def cities(self):
+            """getter method to the list of city"""
+            from models import storage
+            cities_list = []
+            for city in storage.all(City).values():
+                if city.state_id == self.id:
+                    cities_list.append(city)
+            return cities_list
