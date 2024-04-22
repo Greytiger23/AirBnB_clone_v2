@@ -11,10 +11,8 @@ from models.review import Review
 from models.engine.file_storage import FileStorage
 from models.engine.db_storage import DBStorage
 
-storage_type = getenv('HBNB_TYPE_STORAGE')
 
-
-if storage_type == 'db':
+if getenv('HBNB_TYPE_STORAGE') == 'db':
     from models.engine.db_storage import DBStorage
     storage = DBStorage()
 else:

@@ -14,10 +14,10 @@ class State(BaseModel, Base):
     """ State class """
     __tablename__ = 'states'
     name = Column(String(128), nullable=False)
-    cities = relationship("City", cascade="all, delete-orphan",
+    if getenv('HBNB_TYPE_STORAGE') != 'db':
+         cities = relationship("City", cascade="all, delete-orphan",
                           backref="state")
-
-    if storage.__class__.__name__ != 'DBStorage':
+    else:
         def cities(self):
             """getter method to the list of city"""
             cities_list = []
